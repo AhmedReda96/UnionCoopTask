@@ -20,10 +20,6 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     var MLD = MutableLiveData<List<Result>>()
     var resultMLD = MutableLiveData<String>()
 
-
-
-
-
     @RequiresApi(Build.VERSION_CODES.M)
     fun checkNetwork(context: FragmentActivity) {
         if (!context.checkNetwork()) {

@@ -17,6 +17,4 @@ interface Service {
         @Header("Lang") lang: String?,
         @Header("DeviceType") deviceType: String
     ): Response<MainResponse>?
-
-
 }

@@ -29,19 +29,13 @@ import test.ahmed.uc.model.Result
 
 class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     private var resultList = ArrayList<Result>()
-    private lateinit var context: Context
 
 
-    constructor(
-        resultList: ArrayList<Result>,
-        context: Context,
-    ) : this() {
-        this.resultList = resultList
-        this.context = context
 
+
+    fun setList(list:ArrayList<Result>){
+        this.resultList=list
     }
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.data_item, parent, false)
@@ -61,7 +55,7 @@ class HomeAdapter() : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .priority(Priority.HIGH)
         try {
-            Glide.with(context).load(model.media[0].mediaMetadata[0].url)
+            Glide.with(holder.itemView).load(model.media[0].mediaMetadata[0].url)
                 .apply(options)
                 .into(holder.image)
         } catch (e: Exception) {

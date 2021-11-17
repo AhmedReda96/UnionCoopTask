@@ -14,7 +14,6 @@ import javax.inject.Inject
 class HomeRepository @Inject constructor(private val service: Service) {
     private val TAG: String = HomeRepository::class.java.simpleName
     private lateinit var list: MutableLiveData<List<Result>>
-
     private lateinit var parentJob: Job
     private lateinit var scope: CoroutineScope
 
@@ -49,14 +48,10 @@ class HomeRepository @Inject constructor(private val service: Service) {
                         response.message().toString()
                     }"
                 )
-
                 parentJob.cancel()
-
             }
         }
         return list
 
     }
-
-
 }

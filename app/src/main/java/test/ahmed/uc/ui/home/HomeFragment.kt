@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -28,12 +29,7 @@ import test.ahmed.uc.viewModel.HomeViewModel
 class HomeFragment : Fragment(), View.OnClickListener {
     private val TAG: String = HomeFragment::class.java.simpleName
     private lateinit var homeAdapter: HomeAdapter
-
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,12 +46,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun init() {
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-
+        homeAdapter = HomeAdapter()
         dataRV.apply {
             layoutManager =
                 GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
+            dataRV.adapter = homeAdapter
 
         }
 
@@ -97,9 +93,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 "testTag getData:  vm getData : ${it.size}"
             )
 
-            homeAdapter = HomeAdapter(it as ArrayList<Result>, requireContext())
+            homeAdapter.setList(it as ArrayList<Result>)
             homeAdapter.notifyDataSetChanged()
-            dataRV.adapter = homeAdapter
             swipe.isRefreshing = false
 
         })
@@ -111,6 +106,5 @@ class HomeFragment : Fragment(), View.OnClickListener {
             viewModel.checkNetwork(requireActivity())
         }
     }
-
 
 }
